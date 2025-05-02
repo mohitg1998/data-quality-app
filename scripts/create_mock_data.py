@@ -1,17 +1,12 @@
-# -- Create schema (if not exists needs dynamic SQL workaround; skipped here for simplicity)
-# IF NOT EXISTS (
-#     SELECT * FROM sys.schemas WHERE name = 'EXL_SCHEMA'
-# )
-# BEGIN
-#     EXEC('CREATE SCHEMA EXL_SCHEMA');
-# END
+# CREATE DATABASE EXL_DB;
 # GO
 
-# -- Use the database
 # USE EXL_DB;
 # GO
 
-# -- Create tables under the schema
+# CREATE SCHEMA EXL_SCHEMA;
+# GO
+
 # IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Customers' AND SCHEMA_NAME(schema_id) = 'EXL_SCHEMA')
 # BEGIN
 #     CREATE TABLE EXL_SCHEMA.Customers (
@@ -61,6 +56,8 @@
 #     );
 # END
 # GO
+
+# -- Sample Data Insertion (Truncated for brevity, use previous messages for full data)
 
 
 # INSERT INTO EXL_SCHEMA.Customers (CustomerID, Name, Email, Phone) VALUES
@@ -230,9 +227,3 @@
 #         (2028, 38, 9800.00, 5.6, '2024-05-18', '2029-05-18'),
 #         (2029, 39, 12700.00, 6.0, '2024-05-19', '2029-05-19'),
 #         (2030, 40, 11500.00, 6.5, '2024-05-20', '2029-05-20');
-
-
-# SELECT * FROM EXL_SCHEMA.Customers;
-# SELECT * FROM EXL_SCHEMA.Accounts;
-# SELECT * FROM EXL_SCHEMA.Transactions;
-# SELECT * FROM EXL_SCHEMA.Loans;

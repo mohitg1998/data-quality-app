@@ -1,4 +1,11 @@
 import pyodbc
+import os
+
+server = os.getenv("SQL_SERVER_HOST", "localhost")
+port = os.getenv("SQL_SERVER_PORT", "1433")
+username = os.getenv("SQL_SERVER_USER", "sa")
+password = os.getenv("SQL_SERVER_PASSWORD", "YourStrong!Passw0rd")
+
 
 def get_sqlserver_connection(database=None):
     """
@@ -8,7 +15,7 @@ def get_sqlserver_connection(database=None):
     Parameters:
     - database_name (str): Optional. If provided, connects to that specific database.
     """
-    server = "MOHIT\SQLEXPRESS"  # Adjust if your instance name is different
+    # server = "MOHIT\SQLEXPRESS"  # Adjust if your instance name is different
     driver = "ODBC Driver 17 for SQL Server"  # Make sure this is installed
 
     if database:
@@ -16,7 +23,9 @@ def get_sqlserver_connection(database=None):
             f"DRIVER={{{driver}}};"
             f"SERVER={server};"
             f"DATABASE={database};"
-            "Trusted_Connection=yes;"
+            f"UID={username};"
+            f"PWD={password}"
+            # "Trusted_Connection=yes;"
         )
     else:
         # Default to master if no DB specified
@@ -24,7 +33,9 @@ def get_sqlserver_connection(database=None):
             f"DRIVER={{{driver}}};"
             f"SERVER={server};"
             "DATABASE=master;"
-            "Trusted_Connection=yes;"
+            f"UID={username};"
+            f"PWD={password}"
+            # "Trusted_Connection=yes;"
         )
 
     return pyodbc.connect(conn_str)
